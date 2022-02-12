@@ -1,6 +1,6 @@
 # flutter_book
 
-Conteúdo do livro Flutter na Prática.
+Projeto baseado no conteúdo do livro ``Flutter na Prática``. Neste projeto, adaptei o código proposto pelo livro, aplicando o que considero boas práticas, de acordo com a experiência que adquiri com o tempo. Fiz uso de dependências em versões mais recentes e, para a persistência, utilizei o ORM SQFEntity, para maior produtividade.
 
 ## Getting Started
 
