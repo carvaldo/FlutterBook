@@ -1,66 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_book/appointments/appointments_widget.dart';
+import 'package:flutter_book/contacts/contacts_widget.dart';
+import 'package:flutter_book/notes/notes_widget.dart';
+import 'package:flutter_book/tasks/tasks_widget.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const FlutterBook());
+  startup() async {
+    var docsDir = await getApplicationDocumentsDirectory();
+  }
+  startup();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class FlutterBook extends StatelessWidget {
+  const FlutterBook({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      home: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("FlutterBook"),
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.date_range), text: "Appointments"),
+                Tab(icon: Icon(Icons.contacts), text: "Contacts"),
+                Tab(icon: Icon(Icons.note), text: "Notes"),
+                Tab(icon: Icon(Icons.assignment_turned_in), text: "Tasks",)
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          ),
+          body: const TabBarView(children: [
+            AppointmentsWidget(), ContactsWidget(), NotesWidget(), TasksWidget()
+          ]), // Appointments, Contacts, Notes, Tasks
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
