@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter_book/notes/notes_db_worker.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class BaseModel<T> extends Model {
+abstract class BaseModel<T> extends Model {
+
   List<T> _entityList = [];
   T? _entityBeingEdited;
   String? _chosenDate;
@@ -16,13 +19,13 @@ class BaseModel<T> extends Model {
     notifyListeners();
   }
 
-  get entityList => _entityList;
+  List<T> get entityList => _entityList;
 
   T? get entityBeingEdited => _entityBeingEdited;
 
   String? get chosenDate => _chosenDate;
 
-  loadData(String inEntityType, dynamic inDataBase) async {
+  void loadData(String inEntityType, dynamic inDataBase) async {
     _entityList = await inDataBase.getAll();
   }
 }

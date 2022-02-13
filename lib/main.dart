@@ -5,12 +5,9 @@ import 'package:flutter_book/notes/notes_widget.dart';
 import 'package:flutter_book/tasks/tasks_widget.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
   runApp(const FlutterBook());
-  startup() async {
-    var docsDir = await getApplicationDocumentsDirectory();
-  }
-  startup();
+  // var docsDir = await getApplicationDocumentsDirectory();
 }
 
 class FlutterBook extends StatelessWidget {
