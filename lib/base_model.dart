@@ -1,14 +1,17 @@
-import 'dart:async';
-
-import 'package:flutter_book/notes/notes_db_worker.dart';
+import 'package:flutter_book/datasource/repository/base_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:sqfentity_gen/sqfentity_gen.dart';
 
-abstract class BaseModel<T> extends Model {
+abstract class BaseModel<T extends TableBase> extends Model {
 
   List<T> _entityList = [];
-  T? _entityBeingEdited;
+  T? entityBeingEdited;
   String? _chosenDate;
 
+  /* Seleção de data não é lógicamente aplicável em todas as entidades.
+   * Logo, não faz sentido que seja disponibilizada em uma classe base.
+   * TODO: Mover atributo para casos que se faça necessário.
+   */
   set chosenDate(String? value) {
     _chosenDate = value;
     notifyListeners();
@@ -21,11 +24,5 @@ abstract class BaseModel<T> extends Model {
 
   List<T> get entityList => _entityList;
 
-  T? get entityBeingEdited => _entityBeingEdited;
-
   String? get chosenDate => _chosenDate;
-
-  void loadData(String inEntityType, dynamic inDataBase) async {
-    _entityList = await inDataBase.getAll();
-  }
 }

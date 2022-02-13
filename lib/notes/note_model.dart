@@ -7,8 +7,15 @@ import 'package:flutter_book/notes/notes_list.dart';
 
 class NoteModel extends BaseModel<Note> with BaseStack {
 
-  NoteModel({index = 0}) {
+  NoteModel._({index = 0}) {
     this.index = index;
+  }
+
+  static NoteModel? _model;
+
+  static NoteModel getInstance({index = 0}) {
+    NoteModel._model ??= NoteModel._(index: index);
+    return NoteModel._model!;
   }
 
   @override

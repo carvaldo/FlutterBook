@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<String> selectDate(BuildContext inContext, String? inDateString) async {
+Future<DateTime?> selectDate(BuildContext inContext, String? inDateString) {
   var initialDate = DateTime.now();
   if (inDateString != null) {
     var dateParts = inDateString.split(",");
@@ -10,14 +10,10 @@ Future<String> selectDate(BuildContext inContext, String? inDateString) async {
         int.parse(dateParts[2])
     );
   }
-  var picked = await showDatePicker(
+  return showDatePicker(
       context: inContext,
       initialDate: initialDate,
       firstDate: DateTime(1900),
       lastDate: DateTime(2100)
   );
-  if (picked != null) {
-
-  }
-  return "${picked?.year}, ${picked?.month}, ${picked?.day}";
 }

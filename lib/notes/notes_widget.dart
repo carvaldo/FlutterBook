@@ -8,7 +8,7 @@ class NotesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModel<NoteModel>(
-        model: NoteModel(),
+        model: NoteModel.getInstance(),
         child: ScopedModelDescendant<NoteModel>(builder: (inContext, child, model) =>
             IndexedStack(
                 index: model.index,
