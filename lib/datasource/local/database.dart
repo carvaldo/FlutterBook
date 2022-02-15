@@ -13,8 +13,8 @@ const tableNote = SqfEntityTable(
   useSoftDeleting: false,
   modelName: "Note",
   fields: [
-    SqfEntityField("title", DbType.text),
-    SqfEntityField("content", DbType.text),
+    SqfEntityField("title", DbType.text, isNotNull: true),
+    SqfEntityField("content", DbType.text, isNotNull: true),
     SqfEntityField("color", DbType.text),
   ]
 );

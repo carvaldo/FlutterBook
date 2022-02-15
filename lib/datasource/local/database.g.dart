@@ -33,8 +33,8 @@ class TableNote extends SqfEntityTableBase {
 
     // declare fields
     fields = [
-      SqfEntityFieldBase('title', DbType.text),
-      SqfEntityFieldBase('content', DbType.text),
+      SqfEntityFieldBase('title', DbType.text, isNotNull: true),
+      SqfEntityFieldBase('content', DbType.text, isNotNull: true),
       SqfEntityFieldBase('color', DbType.text),
     ];
     super.init();
