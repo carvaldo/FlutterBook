@@ -4,11 +4,12 @@ import 'package:flutter_book/notes/note_model.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class NotesList extends StatelessWidget {
-  const NotesList({Key? key}) : super(key: key);
+class NotesListWidget extends StatelessWidget {
+  const NotesListWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return ScopedModel(
         model: NoteModel.getInstance(),
         child: ScopedModelDescendant(builder: (inContext, inChild, NoteModel inModel){
@@ -30,6 +31,7 @@ class NotesList extends StatelessWidget {
                     ),
                     startActionPane: ActionPane(
                       motion: const DrawerMotion(),
+                      extentRatio: .25,
                       children: [
                         SlidableAction(
                             backgroundColor: Colors.red.shade700,

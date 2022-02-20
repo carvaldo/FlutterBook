@@ -9,6 +9,7 @@ mixin BaseStack<T extends TableBase> on BaseModel<T> {
 
   int get index => _index;
 
+  // TODO: Renomear para stackIndex.
   set index(int value) {
     _index = value;
     notifyListeners();
