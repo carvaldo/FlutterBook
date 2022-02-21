@@ -5,13 +5,15 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:sqfentity_gen/sqfentity_gen.dart';
 
 abstract class BaseModel<T extends TableBase> extends Model {
-  List<T> _entityList;
+  List<T> entityList;
   T? entityBeingEdited;
   String? chosenDate;
   DateTime? latestLoaded;
   final BaseRepository<T> _repository;
 
-  BaseModel(this._repository) : _entityList = List<T>.empty();
+  BaseModel(this._repository) : entityList = List<T>.empty() {
+    loadList();
+  }
 
   postChosenDate(String? value) {
     chosenDate = value;
@@ -19,23 +21,14 @@ abstract class BaseModel<T extends TableBase> extends Model {
   }
 
   postEntityList(value) {
-    _entityList = value;
+    entityList = value;
     notifyListeners();
   }
 
-  postEntityBeingEdited(T? entity) {
+  postEntityBeingEdited(T entity) async {
     entityBeingEdited = entity;
-    notifyListeners();
-  }
-
-
-  List<T> get entityList {
-    _loadList();
-    return _entityList;
-  }
-
-  set entityList(List<T> value) {
-    _entityList = value;
+    await entityBeingEdited!.saveOrThrow();
+    await loadList();
   }
 
   saveAll(List<T> entities) {
@@ -44,10 +37,16 @@ abstract class BaseModel<T extends TableBase> extends Model {
     }
   }
 
-  _loadList() async {
-    if (latestLoaded == null || DateTime.now().difference(latestLoaded!) > const Duration(seconds: 15)) {
+  delete(T entity) async {
+    await entity.delete();
+    await loadList();
+  }
+
+  loadList() async {
+    // Validação para não entrar em loop.
+    if (latestLoaded == null ||
+        DateTime.now().difference(latestLoaded!) > const Duration(seconds: 1)) {
       latestLoaded = DateTime.now();
-      log("_loadList");
       var list = await _repository.findAll();
       postEntityList(list);
     }

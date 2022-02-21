@@ -28,7 +28,10 @@ class NoteEntryWidget extends StatelessWidget{
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(6),
             child: Row(children: [
-              ElevatedButton(onPressed: () => { _saveAndFinish(inContext) }, child: const Text("Salvar")),
+              ElevatedButton(onPressed: () {
+                _save();
+                _back(inContext);
+              }, child: const Text("Salvar")),
               const Spacer(),
               ElevatedButton(onPressed: () => { _back(inContext) }, child: const Text("Cancelar"))
             ],),
@@ -41,7 +44,7 @@ class NoteEntryWidget extends StatelessWidget{
                   leading: const Icon(Icons.title),
                   title: TextFormField(
                     controller: _titleEditingController,
-                    decoration: const InputDecoration(hintText: "Título"),
+                    decoration: const InputDecoration(labelText: "Título"),
                     validator: (String? text) {
                       if (text == null || text.isEmpty) {
                         return "Informe um título.";
@@ -54,7 +57,7 @@ class NoteEntryWidget extends StatelessWidget{
                   leading: const Icon(Icons.title),
                   title: TextFormField(
                     controller: _contentEditingController,
-                    decoration: const InputDecoration(label: Text("Conteúdo")),
+                    decoration: const InputDecoration(labelText: "Conteúdo"),
                     minLines: 5,
                     maxLines: 15,
                     validator: (String? text) {
@@ -82,20 +85,14 @@ class NoteEntryWidget extends StatelessWidget{
     });
   }
 
-  _saveAndFinish(BuildContext context) {
+  _save() {
     if (_formKey.currentState!.validate()) {
-      _updateEntity();
+      var entity = _model.entityBeingEdited!
+        ..title = _titleEditingController.text
+        ..content = _contentEditingController.text;
+      _model.postEntityBeingEdited(entity);
       _model.index = _model.index - 1;
     }
-  }
-
-  _updateEntity() {
-    var title = _titleEditingController.text;
-    var content = _contentEditingController.text;
-    var entity = _model.entityBeingEdited!;
-    entity.title = title;
-    entity.content = content;
-    _model.entityBeingEdited = entity;
   }
 
   _back(BuildContext inContext) {

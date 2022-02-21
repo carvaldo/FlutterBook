@@ -12,17 +12,17 @@ class NoteModel extends BaseModel<Note> with BaseStack {
   static NoteModel? _model;
   final NotesRepository _repository;
 
-  static NoteModel getInstance({index = 0}) {
-    NoteModel._model ??= NoteModel();
-    return NoteModel._model!;
-  }
-
   NoteModel._(this._repository) : super(_repository);
 
   factory NoteModel() {
     return NoteModel._(NotesRepository());
   }
 
+  static NoteModel getInstance({index = 0}) {
+    NoteModel._model ??= NoteModel();
+    return NoteModel._model!;
+  }
+
   @override
-  List<Widget> getChildren() => [ const NotesListWidget(), NoteEntryWidget() ];
+  List<Widget> getChildren() => [ NotesListWidget(), NoteEntryWidget() ];
 }

@@ -5,7 +5,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class NotesListWidget extends StatelessWidget {
-  const NotesListWidget({Key? key}) : super(key: key);
+  NotesListWidget({Key? key}) : super(key: key);
+
+  final NoteModel _model = NoteModel.getInstance();
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +55,11 @@ class NotesListWidget extends StatelessWidget {
   }
 
   _deleteNote(Note note) {
-
+    _model.delete(note);
   }
 
   _showDetail(Note note) {
-
+    _model.entityBeingEdited = note;
+    _model.index = 1;
   }
 }
